@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Blackwave Optimizer/Blackwave Optimizer.csproj" Id="97b96dca-0014-4606-954c-fa3753fe1c48" />
+  <Project Path="pcdatacollector/pcdatacollector.csproj" Id="f52a0acf-0e00-4e95-a49a-8fa543a42e63" />
+  <Project Path="Phyplorer/Phyplorer.csproj" />
+</Solution>
