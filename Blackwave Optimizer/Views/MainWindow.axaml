@@ -23,9 +23,9 @@
   <Grid>
       <Border Background="#0e0e0e">
           <Grid ColumnDefinitions="*" RowDefinitions="auto,*,auto">
-              <Border x:Name="dataBorder" BorderThickness="1" BorderBrush="#1A1A1A" Grid.Row="1" Margin="10" CornerRadius="10" Background="#1e1e1e">
+              <Border CornerRadius="10" x:Name="dataBorder" BorderThickness="1" BorderBrush="#1A1A1A" Grid.Row="1" Margin="10" Background="#1e1e1e">
                   <Grid ColumnDefinitions="*,*,*" RowDefinitions="*">
-                   <Border Grid.Column="0" Background="#2A2A2A">
+                   <Border CornerRadius="10,0,0,10" Grid.Column="0" Background="#2A2A2A">
                        <Grid ColumnDefinitions="*" RowDefinitions="*,*,*">
                          <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Grid.Row="0">
                                  <TextBlock FontWeight="SemiBold" FontSize="24" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1">
@@ -39,7 +39,13 @@
                                </Ellipse>
                                  <!-- Arc - часть окружности -->
                                <Arc Stroke="Red" StartAngle="-90" SweepAngle="240" Width="180" Height="180" StrokeThickness="12" StrokeLineCap="Round">
-                                   
+                              <Arc.Transitions>
+                                  <Transitions>
+                                      <DoubleTransition Property="SweepAngle" Duration="0:0:0.4">
+                                          
+                                      </DoubleTransition>
+                                  </Transitions>
+                              </Arc.Transitions>      
                                </Arc>
                                 <TextBlock Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     52%
@@ -85,7 +91,13 @@
                                
                            </Ellipse>
                                 <Arc StrokeLineCap="Round" StartAngle="-90" SweepAngle="240" Stroke="Green" Width="180" Height="180" StrokeThickness="12">
-                                    
+                                    <Arc.Transitions>
+                                       <Transitions>
+                                           <DoubleTransition Property="SweepAngle" Duration="0:0:0.4">
+                                               
+                                           </DoubleTransition>
+                                       </Transitions>
+                                    </Arc.Transitions>
                                 </Arc>
                                  <TextBlock Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     52%
@@ -119,7 +131,7 @@
                            </Grid>
                        </Grid>
                    </Border>
-                     <Border Grid.Column="2" Background="#4A4A4A">
+                     <Border CornerRadius="0,10,10,0" Grid.Column="2" Background="#4A4A4A">
                         <Grid ColumnDefinitions="*" RowDefinitions="*,*,*">
                               <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Grid.Row="0">
                                  <TextBlock FontWeight="SemiBold" FontSize="24" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1">
@@ -132,7 +144,13 @@
                                     
                                 </Ellipse>
                                 <Arc StrokeLineCap="Round" Stroke="Yellow" Width="180" StartAngle="-90" SweepAngle="1000" Height="180" StrokeThickness="12">
-                                   
+                                   <Arc.Transitions>
+                                      <Transitions>
+                                          <DoubleTransition Property="SweepAngle" Duration="0:0:0.4">
+                                              
+                                          </DoubleTransition>
+                                      </Transitions>
+                                   </Arc.Transitions>
                                 </Arc>
                                 <TextBlock Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     52%
