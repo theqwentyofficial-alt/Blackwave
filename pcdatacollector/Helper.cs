@@ -1,6 +1,7 @@
 ﻿using LibreHardwareMonitor.Hardware;
 using Microsoft.Win32;
 using pcdatacollector.PCData;
+using System.Collections;
 using System.Diagnostics;
 
 namespace pcdatacollector
@@ -10,6 +11,8 @@ namespace pcdatacollector
        
         public static PerformanceCounter cpuLoadCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         public static PerformanceCounter cpuFreqCounter = new PerformanceCounter("Processor Information", "Actual Frequency", "_Total");
+        public static PerformanceCounter memUseCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
+        public static PerformanceCounter memAvailableMBCounter = new PerformanceCounter("Memory", "Available MBytes");
         /// <summary>
         /// Retrieves a value from the Windows registry.
         /// </summary>
@@ -248,6 +251,101 @@ namespace pcdatacollector
                 }
             }
             return new RAM(memoryUsed,memoryAvailable,memory,memoryUsedVirtual,memoryAvailableVirtual,memoryVirtual);
+        }
+       
+        public static List<IHardware> GetIHardwares(Computer computer, HardwareType hwType)
+        {
+            List<IHardware> hw = new List<IHardware>();
+            foreach (var i in computer.Hardware)
+            {
+                if (i.HardwareType == hwType)
+                {
+                    hw.Add(i);
+                    break;
+                }
+            }
+            return hw;
+        }
+        public static List<IHardware> GetIHardwares(Computer computer, HardwareType hwType, string hwName)
+        {
+            List<IHardware> hw = new List<IHardware>();
+            foreach (var i in computer.Hardware)
+            {
+                if (i.HardwareType == hwType && i.Name == hwName)
+                {
+                    hw.Add(i);
+                    break;
+                }
+            }
+            return hw;
+        }
+        public static List<ISensor> GetISensors(Computer computer,HardwareType hwType,string sensorName)
+        {
+            List<ISensor> sensor = new List<ISensor>();
+            foreach (var i in computer.Hardware)
+            {
+                if (i.HardwareType == hwType)
+                {
+                    foreach (var k in i.Sensors)
+                    {
+                        if (k.Name == sensorName)
+                        {
+                            sensor.Add(k);
+                            break;
+                        }
+                    }
+                }
+            }
+            return sensor;
+        }
+        public static List<ISensor> GetISensors(Computer computer, HardwareType hwType, string sensorName, string hardwName)
+        {
+            List<ISensor> sensor = new List<ISensor>();
+            foreach (var i in computer.Hardware)
+            {
+                if (i.HardwareType == hwType)
+                {
+                    foreach (var k in i.Sensors)
+                    {
+                        if (k.Name == sensorName && i.Name == hardwName)
+                        {
+                            sensor.Add(k);
+                            break;
+                        }
+                    }
+                }
+            }
+            return sensor;
+        }
+        public static List<ISensor> GetISensors(Computer computer, HardwareType hwType, SensorType sType, string sensorName)
+        {
+            List<ISensor> sensor = new List<ISensor>();
+            foreach (var i in computer.Hardware)
+            {
+                if (i.HardwareType == hwType)
+                {
+                    foreach (var k in i.Sensors)
+                    {
+                        if (k.Name == sensorName && sType == k.SensorType)
+                        {
+                            sensor.Add(k);
+                            break;
+                        }
+                    }
+                }
+            }
+            return sensor;
+        }
+        public static async Task<float?> GetRamLoad(int delay) {
+            memUseCounter?.NextValue();
+            await Task.Delay(delay);
+            return memUseCounter?.NextValue();
+        }
+        public static async Task<float?> GetRamAvailableMB(int delay)
+        {
+            memAvailableMBCounter?.NextValue();
+            await Task.Delay(delay);
+            return memAvailableMBCounter?.NextValue();
         }
     }
 }

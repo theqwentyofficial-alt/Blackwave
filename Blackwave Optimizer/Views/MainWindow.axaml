@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Blackwave_Optimizer.Views.MainWindow"
         x:DataType="vm:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Blackwave.png"
         Title="Blackwave Optimizer"
         WindowDecorations="None"
         CanResize="False"
@@ -38,7 +38,7 @@
                                    
                                </Ellipse>
                                  <!-- Arc - часть окружности -->
-                               <Arc Stroke="Red" StartAngle="-90" SweepAngle="240" Width="180" Height="180" StrokeThickness="12" StrokeLineCap="Round">
+                               <Arc Stroke="Red" StartAngle="-90" SweepAngle="{Binding LoadInGraduses}" Width="180" Height="180" StrokeThickness="12" StrokeLineCap="Round">
                               <Arc.Transitions>
                                   <Transitions>
                                       <DoubleTransition Property="SweepAngle" Duration="0:0:0.4">
@@ -47,33 +47,60 @@
                                   </Transitions>
                               </Arc.Transitions>      
                                </Arc>
-                                <TextBlock Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    52%
+                            
+                      <TextBlock Text="{Binding Load}" Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    
                                 </TextBlock>
+
                                    <TextBlock Foreground="#FFFFFE" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                                     Usage
                                 </TextBlock>
                            </Grid>
                            <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Grid.Row="2">
                             <Border  Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="0">
-                               <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                               AMD Ryzen 5 5500
+                               <TextBlock Text="{Binding ProcessorName}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                        
                             </TextBlock>   
                             </Border>
                              <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="1">
-                               <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Total Cores: 6
+                               <Grid ColumnDefinitions="*">
+                              <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                                   <TextBlock Text="Cores: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                
                                </TextBlock>   
+                                   <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TotalCores}"/>
+                                 
+                              </StackPanel>
+                                                   
+                               </Grid>
                              </Border>
                               <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="1">
-                               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Total Threads: 12
-                               </TextBlock>   
+                              <Grid ColumnDefinitions="*">
+                                   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                                       <TextBlock  Text="Threads: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                  
+                               </TextBlock>    
+                                     <TextBlock Text="{Binding TotalThreads}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                   
+                               </TextBlock>    
+                                   </StackPanel>
+                              
+                              </Grid>
+                                 
                               </Border>
                                  <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="0">
-                               <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Current Mhz: 3345
-                               </TextBlock>   
+                             <Grid ColumnDefinitions="*">
+                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                   <TextBlock Text="Current MHz: " TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                             
+                               </TextBlock>
+                                 <TextBlock Text="{Binding CurrentMhz}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                     
+                                 </TextBlock>   
+                                 </StackPanel>
+                                  
+                             </Grid>
+                                   
                               </Border>
                                
                            </Grid>
@@ -113,9 +140,13 @@
                             </TextBlock>   
                             </Border>
                              <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="1">
-                               <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Mem Free:
-                               </TextBlock>   
+                              <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                 <TextBlock Text="Mem Free: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                 
+                               </TextBlock>    
+
+                              </StackPanel>
+                                 
                              </Border>
                               <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="1">
                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
@@ -143,7 +174,7 @@
                                 <Ellipse Width="180" Height="180" Stroke="Gray" StrokeThickness="12">
                                     
                                 </Ellipse>
-                                <Arc StrokeLineCap="Round" Stroke="Yellow" Width="180" StartAngle="-90" SweepAngle="1000" Height="180" StrokeThickness="12">
+                                <Arc StrokeLineCap="Round" Stroke="Yellow" Width="180" StartAngle="-90" SweepAngle="{Binding RamLoadInGraduses}" Height="180" StrokeThickness="12">
                                    <Arc.Transitions>
                                       <Transitions>
                                           <DoubleTransition Property="SweepAngle" Duration="0:0:0.4">
@@ -152,8 +183,8 @@
                                       </Transitions>
                                    </Arc.Transitions>
                                 </Arc>
-                                <TextBlock Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    52%
+                                <TextBlock Text="{Binding RamLoad}" Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                   
                                 </TextBlock>
                                    <TextBlock Foreground="#FFFFFE" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                                     Usage
@@ -162,24 +193,49 @@
                             </Grid>
                                 <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Grid.Row="2">
                             <Border  Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="0">
-                               <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                              Used:
-                            </TextBlock>   
+                              <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock Text="Used: " TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                              
+                            </TextBlock>        
+                                  <TextBlock Text="{Binding RamUsed}">
+                                      
+                                  </TextBlock>
+                              </StackPanel>
+                              
                             </Border>
                              <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="1">
-                               <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                Available:
-                               </TextBlock>   
+                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                                 <TextBlock Text="Available: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                               
+                               </TextBlock>     
+                                 <TextBlock Text="{Binding RamAvailable}">
+                                     
+                                 </TextBlock>
+                              </StackPanel>
+                                 
                              </Border>
                               <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="1">
-                               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Virtual Used: 
-                               </TextBlock>   
+                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                                 <TextBlock Text="Virtual Used: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                
+                               </TextBlock>      
+                                 <TextBlock Text="{Binding VirtRamUsed}">
+                                     
+                                 </TextBlock>
+                              </StackPanel>
+                                
                               </Border>
                                  <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="0">
-                               <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Virtual Available: 
-                               </TextBlock>   
+                              <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                                   <TextBlock Text="Virtual Available: " TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                 
+                               </TextBlock>       
+                                  <TextBlock Text="{Binding VirtRamAvailable}">
+                                      
+                                  </TextBlock>
+                              </StackPanel>
+                               
+                                       
                               </Border>
                                
                            </Grid>
