@@ -1,7 +1,8 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using System.Net.NetworkInformation;
-using pcdatacollector.PCData;
 using pcdatacollector;
+using pcdatacollector.PCData;
+using System.Net.NetworkInformation;
+using static System.Net.Mime.MediaTypeNames;
 Computer computer = new Computer()
 {
     IsCpuEnabled = true,
@@ -10,17 +11,19 @@ Computer computer = new Computer()
 };
 computer.Open();
 PC pc = new PC(computer);
+
 foreach (var i in computer.Hardware)
 {
-    if (i.HardwareType == HardwareType.Memory)
+    foreach (var k in i.Sensors)
     {
-        foreach (var k in i.Sensors)
+        if (k.SensorType == SensorType.Load && i.HardwareType == HardwareType.GpuNvidia)
         {
+          
             Console.WriteLine(k.Name);
         }
     }
 }
-Console.WriteLine(GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / (1024*1024));
+
 
 computer.Close();
 

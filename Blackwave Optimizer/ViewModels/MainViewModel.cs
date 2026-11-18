@@ -10,6 +10,22 @@ namespace Blackwave_Optimizer.ViewModels;
 public partial class MainViewModel : ViewModelBase
 {
     [ObservableProperty]
+    public float? ramUsed2;
+    [ObservableProperty]
+    public float? gpuLoadInGraduses;
+    [ObservableProperty]
+    public string? gpuLoad;
+    [ObservableProperty]
+    public string? gpuMemFree;
+    [ObservableProperty]
+    public string? gpuMemUsed;
+    [ObservableProperty]
+    public float? gpuMemTotal;
+    [ObservableProperty]
+    public string? gpuName;
+    [ObservableProperty]
+    public string? gpuTemp;
+    [ObservableProperty]
     public long? totalRam = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / (1024 * 1024);
     [ObservableProperty]
     public float? ramLoadInGraduses;

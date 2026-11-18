@@ -1,6 +1,6 @@
-﻿namespace pcdatacollector.PCData
+﻿namespace pcdatacollector.PCData.Hardware
 {
-    public class CPU
+    public struct CPU
     {
         public string? Name { get; set; }
         public string? Vendor { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace pcdatacollector.PCData
+﻿namespace pcdatacollector.PCData.Hardware
 {
-    public class GPU
+    public struct GPU
     {
 
         public string? Name { get; set; }

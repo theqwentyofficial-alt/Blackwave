@@ -21,15 +21,19 @@
     </Design.DataContext>
 
   <Grid>
+   
       <Border Background="#0e0e0e">
           <Grid ColumnDefinitions="*" RowDefinitions="auto,*,auto">
               <Border CornerRadius="10" x:Name="dataBorder" BorderThickness="1" BorderBrush="#1A1A1A" Grid.Row="1" Margin="10" Background="#1e1e1e">
+                
                   <Grid ColumnDefinitions="*,*,*" RowDefinitions="*">
+                  
                    <Border CornerRadius="10,0,0,10" Grid.Column="0" Background="#2A2A2A">
                        <Grid ColumnDefinitions="*" RowDefinitions="*,*,*">
                          <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Grid.Row="0">
                                  <TextBlock FontWeight="SemiBold" FontSize="24" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1">
                                     CPU
+
                                 </TextBlock>
                             </Grid>
                            <Grid Grid.Row="1">
@@ -117,7 +121,7 @@
                            <Ellipse Width="180" Height="180" Stroke="Gray" StrokeThickness="12">
                                
                            </Ellipse>
-                                <Arc StrokeLineCap="Round" StartAngle="-90" SweepAngle="240" Stroke="Green" Width="180" Height="180" StrokeThickness="12">
+                                <Arc StrokeLineCap="Round" StartAngle="-90" SweepAngle="{Binding GpuLoadInGraduses}" Stroke="Green" Width="180" Height="180" StrokeThickness="12">
                                     <Arc.Transitions>
                                        <Transitions>
                                            <DoubleTransition Property="SweepAngle" Duration="0:0:0.4">
@@ -126,8 +130,8 @@
                                        </Transitions>
                                     </Arc.Transitions>
                                 </Arc>
-                                 <TextBlock Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    52%
+                                 <TextBlock Text="{Binding GpuLoad}" Foreground="#FFFFFE" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    
                                 </TextBlock>
                                    <TextBlock Foreground="#FFFFFE" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                                     Usage
@@ -135,28 +139,51 @@
                             </Grid>
                              <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Grid.Row="2">
                             <Border  Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="0">
-                               <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                               Nvidia RTX GeForce 3050
+                               <TextBlock Text="{Binding GpuName}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                              
                             </TextBlock>   
                             </Border>
                              <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="1">
                               <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                 <TextBlock Text="Mem Free: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                 
-                               </TextBlock>    
+                                  <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"> 
+                                                    <TextBlock Text="Mem Free: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                
+                               </TextBlock>   
+                                    <TextBlock Text="{Binding GpuMemFree}">
+                                        
+                                    </TextBlock>
+
+                                </StackPanel>
+                  
 
                               </StackPanel>
                                  
                              </Border>
                               <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="1">
-                               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"> 
+                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
                                    Mem Used:
                                </TextBlock>   
+                                    <TextBlock Text="{Binding GpuMemUsed}">
+                                        
+                                    </TextBlock>
+
+                                </StackPanel>
+                  
+
                               </Border>
                                  <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="0">
-                               <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Hot Spot: 36*
-                               </TextBlock>   
+                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"> 
+                                 <TextBlock Text="Temp: " TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                   
+                               </TextBlock>
+                                 <TextBlock Text="{Binding GpuTemp}">
+                                     
+                                 </TextBlock>
+                             </StackPanel>
+
+                          
+
                               </Border>
                                
                            </Grid>
@@ -205,7 +232,7 @@
                             </Border>
                              <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="1" Grid.Column="1">
                              <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                                 <TextBlock Text="Available: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                 <TextBlock Text="Free: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
                                
                                </TextBlock>     
                                  <TextBlock Text="{Binding RamAvailable}">

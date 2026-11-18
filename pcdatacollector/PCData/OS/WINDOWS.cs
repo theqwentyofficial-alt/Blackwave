@@ -1,4 +1,4 @@
-﻿namespace pcdatacollector.PCData
+﻿namespace pcdatacollector.PCData.OS
 {
     public class WINDOWS
     {

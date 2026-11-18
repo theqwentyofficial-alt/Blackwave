@@ -1,11 +1,12 @@
 ﻿using LibreHardwareMonitor.Hardware;
+using pcdatacollector.PCData.Managers.HardwareManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace pcdatacollector.PCData
+namespace pcdatacollector.PCData.Hardware
 {
-    public class RAM
+    public struct RAM
     {
         public float? TotalUsed { get; set; }
         public float? TotalAvailable { get; set; }
@@ -24,7 +25,7 @@ public float? Load { get; set; }
         }
         public RAM(Computer computer)
         {
-            RAM ram = Helper.GetFullRamInfo(computer);
+            RAM ram = RamManager.GetFullInfo(computer);
             this.TotalUsed = ram.TotalUsed;
             TotalAvailable = ram.TotalAvailable;
             Load = ram.Load;
