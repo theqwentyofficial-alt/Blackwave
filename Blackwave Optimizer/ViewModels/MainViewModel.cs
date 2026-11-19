@@ -54,9 +54,9 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     public string? load;
     [ObservableProperty]
-    public bool isStats;
+    public bool isStats = true;
     [ObservableProperty]
-    public bool isOpt;
+    public bool isOpt = false;
     
 
     [RelayCommand]

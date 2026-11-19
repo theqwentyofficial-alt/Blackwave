@@ -24,7 +24,7 @@
    
       <Border Background="#0e0e0e">
           <Grid ColumnDefinitions="*" RowDefinitions="auto,*,auto">
-              <Border CornerRadius="10" x:Name="dataBorder" BorderThickness="1" BorderBrush="#1A1A1A" Grid.Row="1" Margin="10" Background="#1e1e1e">
+              <Border IsVisible="{Binding IsStats}" CornerRadius="10" x:Name="dataBorder" BorderThickness="1" BorderBrush="#1A1A1A" Grid.Row="1" Margin="10" Background="#1e1e1e">
                 
                   <Grid ColumnDefinitions="*,*,*" RowDefinitions="*">
                   

@@ -26,11 +26,11 @@ namespace pcdatacollector.PCData.Managers.HardwareManagers
         /// </summary>
         /// <param name="computer">The computer to retrieve CPU information from. CPU monitoring must be enabled.</param>
         /// <returns>The CPU information, or <see langword="null"/> if CPU monitoring is disabled or no CPU is found.</returns>
-        public static CPU GetFullInfo(Computer computer)
+        public static CPU? GetFullInfo(Computer computer)
         {
             if (computer.IsCpuEnabled == false)
             {
-                return new CPU();
+                return null;
             }
 
             foreach (var hardware in computer.Hardware)

@@ -18,7 +18,7 @@ namespace pcdatacollector.PCData.Managers.HardwareManagers
         {
             if (computer.IsMemoryEnabled == false)
             {
-                return new RAM();
+                return null;
             }
 
             float? memoryUsed = 0;

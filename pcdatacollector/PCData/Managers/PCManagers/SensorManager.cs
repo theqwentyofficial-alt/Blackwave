@@ -4,59 +4,52 @@ namespace pcdatacollector.PCData.Managers.PCManagers
 {
     public static class SensorManager
     {
-        public static List<ISensor> GetSensors(Computer computer, HardwareType hwType, string sensorName)
+        public static List<ISensor> GetSensors(Computer computer, IHardware hw, string sensorName)
+        {  
+              List<ISensor> sensor = new List<ISensor>();
+                  foreach (var sens in hw.Sensors)
+                  {
+                      if (sens.Name == sensorName)
+                      {
+                          sensor.Add(sens);
+                      }
+                  }
+            return sensor;
+        }
+        public static List<ISensor> GetSensors(Computer computer, IHardware hw, string sensorName, string hardwName)
         {
             List<ISensor> sensor = new List<ISensor>();
-            foreach (var i in computer.Hardware)
-            {
-                if (i.HardwareType == hwType)
-                {
-                    foreach (var k in i.Sensors)
+                    foreach (var sens in hw.Sensors)
                     {
-                        if (k.Name == sensorName)
+                        if (sens.Name == sensorName && hw.Name == hardwName)
                         {
-                            sensor.Add(k);
-                            break;
+                            sensor.Add(sens);
                         }
                     }
+            return sensor;
+        }
+        public static List<ISensor> GetSensors(Computer computer, IHardware hw, SensorType sType, string sensorName)
+        {
+            List<ISensor> sensor = new List<ISensor>();
+
+            foreach (var sens in hw.Sensors)
+            {
+                if (sens.Name == sensorName && sType == sens.SensorType)
+                {
+                    sensor.Add(sens);
                 }
             }
             return sensor;
         }
-        public static List<ISensor> GetSensors(Computer computer, HardwareType hwType, string sensorName, string hardwName)
+        public static List<ISensor> GetSensors(Computer computer, IHardware hw, SensorType sType, string sensorName,string hardwName)
         {
             List<ISensor> sensor = new List<ISensor>();
-            foreach (var i in computer.Hardware)
+
+            foreach (var sens in hw.Sensors)
             {
-                if (i.HardwareType == hwType)
+                if (sens.Name == sensorName && sType == sens.SensorType && hw.Name == hardwName)
                 {
-                    foreach (var k in i.Sensors)
-                    {
-                        if (k.Name == sensorName && i.Name == hardwName)
-                        {
-                            sensor.Add(k);
-                            break;
-                        }
-                    }
-                }
-            }
-            return sensor;
-        }
-        public static List<ISensor> GetSensors(Computer computer, HardwareType hwType, SensorType sType, string sensorName)
-        {
-            List<ISensor> sensor = new List<ISensor>();
-            foreach (var i in computer.Hardware)
-            {
-                if (i.HardwareType == hwType)
-                {
-                    foreach (var k in i.Sensors)
-                    {
-                        if (k.Name == sensorName && sType == k.SensorType)
-                        {
-                            sensor.Add(k);
-                            break;
-                        }
-                    }
+                    sensor.Add(sens);
                 }
             }
             return sensor;

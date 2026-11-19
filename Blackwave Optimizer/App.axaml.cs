@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using pcdatacollector.PCData.Managers.PCManagers;
 using pcdatacollector.PCData.Managers.HardwareManagers;
 using pcdatacollector.PCData.Managers.OSManagers;
+using Avalonia.Rendering.Composition;
+using pcdatacollector.PCData.Counters;
 namespace Blackwave_Optimizer;
 
 public partial class App : Application
@@ -54,7 +56,7 @@ public partial class App : Application
         Task.Run(async () =>
         {
             List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.Memory);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.Memory, "Memory Used", "Total Memory");
+            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "Memory Used", "Total Memory");
 
             while (true)
             {
@@ -87,7 +89,7 @@ public partial class App : Application
           {
               
         List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.Cpu);
-  List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.Cpu, "CPU Total");
+  List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "CPU Total");
   while(true)
   {
       hw[0].Update();
@@ -117,7 +119,7 @@ public partial class App : Application
         Task.Run(async () =>
         {
             List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.Memory);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.Memory, "Memory Used", "Virtual Memory");
+            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "Memory Used", "Virtual Memory");
 
             while (true)
             {
@@ -130,7 +132,7 @@ public partial class App : Application
         Task.Run(async () =>
         {
             List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.Memory);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.Memory, "Memory Available", "Virtual Memory");
+            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "Memory Available", "Virtual Memory");
 
             while (true)
             {
@@ -143,7 +145,7 @@ public partial class App : Application
         Task.Run(async () =>
         {
             List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, "GPU Core");
+            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Core");
             vm.GpuName = hw[0].Name;
             while (true)
             {
@@ -156,14 +158,14 @@ public partial class App : Application
         Task.Run(() =>
         {
             List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, "GPU Memory Total");
+            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Memory Total");
             vm.GpuMemTotal = sensor[0].Value;
         });
   
                Task.Run(async () =>
                {
                    List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-                   List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, "GPU Memory Used");
+                   List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Memory Used");
                    while (true)
                    {
                        hw[0].Update();
@@ -175,7 +177,7 @@ public partial class App : Application
         Task.Run(async () =>
         {
             List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, "GPU Memory Free");
+            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Memory Free");
             while (true)
             {
                 hw[0].Update();
@@ -186,39 +188,19 @@ public partial class App : Application
         });
         Task.Run(async () =>
         {
-            List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-            List<ISensor> core = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "GPU Core");
-            List<ISensor> memCtrl = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "GPU Memory Controller");
-            List<ISensor> gpuEngine = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "GPU Video Engine");
-            List<ISensor> gpuBus = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "GPU Bus");
-            List<ISensor> D3D3d = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D 3D");
-            List<ISensor> D3Doverlay = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D Overlay");
-            List<ISensor> D3DvidDecode = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D Video Decode");
-            List<ISensor> D3Dcopy = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D Copy");
-            List<ISensor> D3Dsecurity = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D Security");
-            List<ISensor> D3DvidEncode = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D Video Encode");
-            List<ISensor> D3DoptFlowAccel = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D Optical Flow Accelerator 0");
-            List<ISensor> D3Dvr = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D VR");
-            List<ISensor> D3Dsecurity_1 = SensorManager.GetSensors(computer, HardwareType.GpuNvidia, SensorType.Load, "D3D Security_1");
+            IHardware hw = GpuManager.GetGpu(computer);
+            GpuCounters gpuCounters = new GpuCounters(computer);
             List<float> arr = new List<float>();
             float percent = 0;
             while (true)
             {
                 arr.Clear();
-                hw[0].Update();
-                arr.Add((float)core[0]?.Value);
-                arr.Add((float)memCtrl[0]?.Value);
-                arr.Add((float)gpuEngine[0]?.Value);
-                arr.Add((float)gpuBus[0]?.Value);
-                arr.Add((float)D3D3d[0]?.Value);
-                arr.Add((float)D3Doverlay[0]?.Value);
-                arr.Add((float)D3DvidDecode[0]?.Value);
-                arr.Add((float)D3Dcopy[0]?.Value);
-                arr.Add((float)D3Dsecurity[0]?.Value);
-                arr.Add((float)D3DvidEncode[0]?.Value);
-                arr.Add((float)D3DoptFlowAccel[0]?.Value);
-                arr.Add((float)D3Dvr[0]?.Value);
-                arr.Add((float)D3Dsecurity_1[0]?.Value);
+                hw.Update();
+                
+                await Task.Run(() =>
+                {
+                    arr = GpuManager.GetSensorsValues(gpuCounters);
+                });
                 if (arr.Max() > 100)
                 {
                     percent = 100;

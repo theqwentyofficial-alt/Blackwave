@@ -6,7 +6,7 @@ using System.Text;
 
 namespace pcdatacollector.PCData.Hardware
 {
-    public struct RAM
+    public class RAM
     {
         public float? TotalUsed { get; set; }
         public float? TotalAvailable { get; set; }

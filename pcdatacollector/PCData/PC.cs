@@ -1,8 +1,4 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using Microsoft.Win32;
-using pcdatacollector;
-using System.Globalization;
-using pcdatacollector.PCData.Counters;
 using pcdatacollector.PCData.Hardware;
 using pcdatacollector.PCData.OS;
 using pcdatacollector.PCData.Managers.HardwareManagers;
@@ -36,10 +32,12 @@ namespace pcdatacollector.PCData
         }
         private void GetPCInfo(CPU? cpu, GPU? gpu,RAM? ram, WINDOWS? windowsInfo)
         {
+           
             this.cpu = cpu;
             this.gpu = gpu;
             this.ram = ram;
             this.windows = windowsInfo;
         }
+       
     }
 }
