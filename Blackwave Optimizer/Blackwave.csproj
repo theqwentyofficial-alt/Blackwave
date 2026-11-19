@@ -27,6 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\pcdatacollector\pcdatacollector.csproj" />
+    <ProjectReference Include="..\pcdatacollector\DataProvider.csproj" />
   </ItemGroup>
 </Project>

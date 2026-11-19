@@ -1,10 +1,7 @@
-﻿
-
-using LibreHardwareMonitor.Hardware;
-using pcdatacollector.PCData.Managers.HardwareManagers;
-using pcdatacollector.PCData.Managers.PCManagers;
-
-namespace pcdatacollector.PCData.Counters
+﻿using LibreHardwareMonitor.Hardware;
+using DataProvider.Managers.HardwareManagers;
+using DataProvider.Managers.PCManagers;
+namespace DataProvider.Counters
 {
     public class GpuCounters
     {

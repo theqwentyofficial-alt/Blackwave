@@ -5,19 +5,14 @@ using Avalonia.Threading;
 using Blackwave_Optimizer.ViewModels;
 using Blackwave_Optimizer.Views;
 using LibreHardwareMonitor.Hardware;
-using pcdatacollector;
-using pcdatacollector.PCData;
-using System;
+using DataProvider;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using pcdatacollector.PCData.Managers.PCManagers;
-using pcdatacollector.PCData.Managers.HardwareManagers;
-using pcdatacollector.PCData.Managers.OSManagers;
-using Avalonia.Rendering.Composition;
-using pcdatacollector.PCData.Counters;
+using DataProvider.Counters;
+using DataProvider.Managers.HardwareManagers;
+using DataProvider.Managers.PCManagers;
 namespace Blackwave_Optimizer;
 
 public partial class App : Application
@@ -29,15 +24,16 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        const int refreshRate = 1000;
         Computer computer = new Computer()
         {
             IsCpuEnabled = true,
             IsGpuEnabled = true,
             IsMemoryEnabled = true
         };
-        
-        computer.Open();
+    computer.Open();
         MainViewModel? vm = new MainViewModel();
+        IHardware gpu = GpuManager.GetGpu(computer);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
@@ -49,8 +45,6 @@ public partial class App : Application
                 vm = desktop.MainWindow.DataContext as MainViewModel;
             }
         }
-
-    
         base.OnFrameworkInitializationCompleted();
         PC pc = new PC(computer);
         Task.Run(async () =>
@@ -62,7 +56,7 @@ public partial class App : Application
             {
                 hw[0].Update();
                 vm.RamUsed = (((vm.TotalRam - vm.RamAvailable2))).ToString() + "MB";
-                await Task.Delay(1000);
+                await Task.Delay(refreshRate);
             }
 
         });
@@ -78,7 +72,7 @@ public partial class App : Application
 
             while (true)
             {
-                int cpuMhz = await CpuManager.GetActualMhz(1000);
+                int cpuMhz = await CpuManager.GetActualMhz(refreshRate);
                 Dispatcher.UIThread.Post(() =>
                 {
                     vm?.CurrentMhz = cpuMhz;
@@ -95,23 +89,24 @@ public partial class App : Application
       hw[0].Update();
       vm?.LoadInGraduses = (int)(sensor[0]?.Value * 3.6f);
       vm?.Load = ((int)sensor[0]?.Value).ToString() + "%";
-      await Task.Delay(1000);
+      await Task.Delay(refreshRate);
   }
           });
         Task.Run(async () =>
         {
             while (true)
             {
-                float? available = await RamManager.GetAvailableMB(1000);
+                float? available = await RamManager.GetAvailableMB(refreshRate);
                 vm.RamAvailable = (available.ToString() + "MB");
                 vm.RamAvailable2 = available;
             }
         });
+
         Task.Run(async () =>
         {
             while (true)
             {
-             float? load = await RamManager.GetLoad(1000);
+             float? load = await RamManager.GetLoad(refreshRate);
                 vm.RamLoad = ((int)load).ToString() + "%";
                 vm.RamLoadInGraduses = load * 3.6f;
             }
@@ -124,8 +119,8 @@ public partial class App : Application
             while (true)
             {
                 hw[0].Update();
-               vm.VirtRamUsed = ((int)sensor[0].Value * 1024).ToString();
-                await Task.Delay(1000);
+               vm.VirtRamUsed = ((int)sensor[0].Value * 1024).ToString() + "MB";
+                await Task.Delay(refreshRate);
             }
 
         });
@@ -137,65 +132,65 @@ public partial class App : Application
             while (true)
             {
                 hw[0].Update();
-                vm.VirtRamAvailable = ((int)sensor[0].Value * 1024).ToString();
-                await Task.Delay(1000);
-            }
-
-        });
-        Task.Run(async () =>
-        {
-            List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Core");
-            vm.GpuName = hw[0].Name;
-            while (true)
-            {
-                hw[0].Update();
-                vm.GpuTemp = (sensor[0].Value).ToString() + "℃";
-                await Task.Delay(1000);
+                vm.VirtRamAvailable = ((int)sensor[0].Value * 1024).ToString() + "MB";
+                await Task.Delay(refreshRate);
             }
 
         });
         Task.Run(() =>
         {
-            List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Memory Total");
+            while(true)
+            {
+                gpu.Update();
+                Thread.Sleep(refreshRate);
+            }
+        });
+        Task.Run(async () =>
+        {
+            List<ISensor> sensor = SensorManager.GetSensors(computer, gpu, "GPU Core");
+            vm.GpuName = gpu.Name;
+            while (true)
+            {
+                vm.GpuTemp = (sensor[0].Value).ToString() + "℃";
+                await Task.Delay(refreshRate);
+            }
+
+        });
+        Task.Run(() =>
+        {
+            List<ISensor> sensor = SensorManager.GetSensors(computer, gpu, "GPU Memory Total");
             vm.GpuMemTotal = sensor[0].Value;
         });
   
                Task.Run(async () =>
-               {
-                   List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-                   List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Memory Used");
+               { 
+                   List<ISensor> sensor = SensorManager.GetSensors(computer, gpu, "GPU Memory Used");
                    while (true)
                    {
-                       hw[0].Update();
                        vm.GpuMemUsed = (sensor[0].Value).ToString() + "MB";
-                       await Task.Delay(1000);
+                       await Task.Delay(refreshRate);
                    }
 
                });
         Task.Run(async () =>
         {
-            List<IHardware> hw = HardwareManager.GetHardwares(computer, HardwareType.GpuNvidia);
-            List<ISensor> sensor = SensorManager.GetSensors(computer, hw[0], "GPU Memory Free");
+            List<ISensor> sensor = SensorManager.GetSensors(computer, gpu, "GPU Memory Free");
             while (true)
             {
-                hw[0].Update();
                 vm.GpuMemFree = (sensor[0].Value).ToString() + "MB";
-                await Task.Delay(1000);
+                await Task.Delay(refreshRate);
             }
-
         });
+       
         Task.Run(async () =>
-        {
-            IHardware hw = GpuManager.GetGpu(computer);
+        { 
             GpuCounters gpuCounters = new GpuCounters(computer);
             List<float> arr = new List<float>();
             float percent = 0;
             while (true)
             {
                 arr.Clear();
-                hw.Update();
+                gpu.Update();
                 
                 await Task.Run(() =>
                 {
@@ -211,7 +206,7 @@ public partial class App : Application
                                 
                 vm.GpuLoad = ((int)percent).ToString() + "%";
                 vm.GpuLoadInGraduses = (float)(percent * 3.6f);
-                await Task.Delay(1000);
+                await Task.Delay(refreshRate);
             }
 
         });

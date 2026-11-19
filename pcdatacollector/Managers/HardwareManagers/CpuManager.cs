@@ -1,25 +1,13 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using pcdatacollector.PCData.Counters;
-using pcdatacollector.PCData.Hardware;
-using pcdatacollector.PCData.Managers.OSManagers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-namespace pcdatacollector.PCData.Managers.HardwareManagers
+using DataProvider.Counters;
+using DataProvider.Hardware;
+namespace DataProvider.Managers.HardwareManagers
 {
     public static class CpuManager
     {
-        public static string? GetName()
+        public static string? GetName(IHardware cpu)
         {
-            return RegistryManager.GetReg<string>("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", "ProcessorNameString");
-        }
-        public static string? GetVendor()
-        {
-            return RegistryManager.GetReg<string>("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", "VendorIdentifier");
-        }
-        public static int? GetMhz()
-        {
-            return RegistryManager.GetReg<int>("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", "~MHz");
+            return cpu.Name;
         }
         /// <summary>
         /// Gets the full CPU information.Automatically fills full CPU class variables.
@@ -38,8 +26,6 @@ namespace pcdatacollector.PCData.Managers.HardwareManagers
                 if (hardware.HardwareType == HardwareType.Cpu)
                 {
                     string? name = hardware.Name;
-                    string? vendor = CpuManager.GetVendor();
-                    int? globalMhz = CpuManager.GetMhz();
                     int? totalCores;
                     int? totalThreads;
                     string? socket;
@@ -53,7 +39,7 @@ namespace pcdatacollector.PCData.Managers.HardwareManagers
                     socket = pInfos[0].Socket.ToString();
                     maxSpeed = pInfos[0].MaxSpeed;
 
-                    return new CPU(name, vendor, globalMhz, totalCores, totalThreads, socket, maxSpeed);
+                    return new CPU(name, totalCores, totalThreads, socket, maxSpeed);
                 }
             }
             return new CPU();

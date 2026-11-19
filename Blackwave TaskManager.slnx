@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Blackwave Optimizer/Blackwave.csproj" Id="97b96dca-0014-4606-954c-fa3753fe1c48" />
+  <Project Path="pcdatacollector/DataProvider.csproj" Id="f52a0acf-0e00-4e95-a49a-8fa543a42e63" />
+</Solution>

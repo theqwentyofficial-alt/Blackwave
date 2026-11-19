@@ -161,8 +161,8 @@
                              </Border>
                               <Border Margin="5" CornerRadius="5" Background="#CCCCCC" Grid.Row="2" Grid.Column="1">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"> 
-                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
-                                   Mem Used:
+                                                    <TextBlock Text="Mem Used: " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black">
+                                   
                                </TextBlock>   
                                     <TextBlock Text="{Binding GpuMemUsed}">
                                         
@@ -270,6 +270,7 @@
                    </Border>
                   </Grid>
               </Border>
+              
               <Border Grid.Row="0" BorderThickness="2" BorderBrush="#2A2A2A" x:Name="topBorder" PointerPressed="OnPointerPressed" Height="40" Width="1280" MaxHeight="40" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#2e2e2e">
                 <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="*">
                     
@@ -283,11 +284,8 @@
                 </Border> 
               <Border Margin="0,10,0,10" Grid.Row="2" BorderThickness="2" BorderBrush="#2A2A2A" x:Name="bottomBorder" Width="1280" Height="50" Background="#2e2e2e" VerticalAlignment="Bottom">
                   <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                      <Button Command="{Binding SwitchToStatsCommand}" Foreground="White" FontSize="20" Background="Transparent">
+                      <Button Foreground="White" FontSize="20" Background="Transparent">
                           Statistics
-                      </Button>
-                      <Button Command="{Binding SwitchToOptCommand}" Foreground="White" FontSize="20" Background="Transparent">
-                          Optimizer
                       </Button>
                       <Button Command="{Binding ExitCommand}" Foreground="White" FontSize="20" Background="Transparent">
                           Exit

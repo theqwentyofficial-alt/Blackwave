@@ -1,11 +1,7 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using pcdatacollector.PCData.Counters;
-using pcdatacollector.PCData.Hardware;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace pcdatacollector.PCData.Managers.HardwareManagers
+using DataProvider.Counters;
+using DataProvider.Hardware;
+namespace DataProvider.Managers.HardwareManagers
 {
     public static class RamManager
     {

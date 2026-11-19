@@ -1,6 +1,5 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using pcdatacollector.PCData.Managers;
-namespace pcdatacollector.PCData.Managers.PCManagers
+namespace DataProvider.Managers.PCManagers
 {
     public static class HardwareManager
     {

@@ -1,10 +1,6 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using pcdatacollector.PCData.Managers.HardwareManagers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace pcdatacollector.PCData.Hardware
+using DataProvider.Managers.HardwareManagers;
+namespace DataProvider.Hardware
 {
     public class RAM
     {

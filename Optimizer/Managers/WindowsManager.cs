@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace pcdatacollector.PCData.Managers.OSManagers
+﻿namespace DataProvider.Managers.OSManagers
 {
     public static class WindowsManager
     {

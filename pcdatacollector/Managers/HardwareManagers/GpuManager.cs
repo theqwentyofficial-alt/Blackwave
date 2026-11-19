@@ -1,12 +1,8 @@
-﻿using DiskInfoToolkit.Interop.Structures;
-using LibreHardwareMonitor.Hardware;
-using pcdatacollector.PCData.Counters;
-using pcdatacollector.PCData.Managers.PCManagers;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LibreHardwareMonitor.Hardware;
+using DataProvider.Counters;
+using DataProvider.Managers.PCManagers;
 
-namespace pcdatacollector.PCData.Managers.HardwareManagers
+namespace DataProvider.Managers.HardwareManagers
 {
     public static class GpuManager
     {

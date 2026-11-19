@@ -55,9 +55,7 @@ public partial class MainViewModel : ViewModelBase
     public string? load;
     [ObservableProperty]
     public bool isStats = true;
-    [ObservableProperty]
-    public bool isOpt = false;
-    
+
 
     [RelayCommand]
     private void Exit()
@@ -71,17 +69,5 @@ public partial class MainViewModel : ViewModelBase
         {
             desktop.MainWindow.WindowState = Avalonia.Controls.WindowState.Minimized;
         }
-    }
-    [RelayCommand]
-    private void SwitchToStats()
-    {
-        IsStats = true;
-        IsOpt = false;
-    }
-    [RelayCommand]
-    private void SwitchToOpt()
-    {
-        IsOpt = true;
-        IsStats = false;
     }
 }

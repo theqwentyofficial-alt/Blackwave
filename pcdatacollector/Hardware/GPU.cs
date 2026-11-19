@@ -1,8 +1,5 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using pcdatacollector.PCData.Counters;
-using pcdatacollector.PCData.Managers.HardwareManagers;
-
-namespace pcdatacollector.PCData.Hardware
+namespace DataProvider.Hardware
 {
     public class GPU
     {

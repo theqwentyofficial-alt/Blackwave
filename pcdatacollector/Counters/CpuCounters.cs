@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
-namespace pcdatacollector.PCData.Counters
+﻿using System.Diagnostics;
+namespace DataProvider.Counters
 {
     public static class CpuCounters
     {
